@@ -3,7 +3,13 @@
 import { useRouter } from 'next/navigation';
 import { farms } from '../../data';
 
-export default function BookingPage({ params }: { params: { id: string } }) {
+type BookingPageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default function BookingPage({ params }: BookingPageProps) {
   const router = useRouter();
   const farm = farms.find(f => f.id === parseInt(params.id));
 
