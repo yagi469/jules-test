@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
-  title: "農園収穫体験",
-  description: "お気に入りの農園を見つけて、収穫体験を予約しましょう。",
+  title: "FarmHarbor | 次の農園体験を見つけよう",
+  description: "フルーツ狩りから農家民泊まで、ユニークな農園体験を見つけて予約しましょう。",
 };
 
 export default function RootLayout({
@@ -14,23 +17,36 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className="bg-gray-100 text-gray-800 font-sans">
-        <header className="bg-green-500 text-white p-4 text-center">
-          <h1 className="text-2xl font-bold">
-            <Link href="/">農園収穫体験へようこそ！</Link>
-          </h1>
-          <nav>
-            <Link href="/" className="text-white mx-4">ホーム</Link>
-            <Link href="#" className="text-white mx-4">マイページ</Link>
-          </nav>
+      <body className={`${inter.className} bg-gray-50 text-gray-800`}>
+        <header className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <Link href="/" className="text-2xl font-bold text-green-700">
+                FarmHarbor
+              </Link>
+              <nav className="space-x-6">
+                <Link href="/" className="text-gray-600 hover:text-green-700 transition-colors">
+                  ホーム
+                </Link>
+                <Link href="#" className="text-gray-600 hover:text-green-700 transition-colors">
+                  予約一覧
+                </Link>
+                <Link href="#" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                  サインイン
+                </Link>
+              </nav>
+            </div>
+          </div>
         </header>
 
-        <main className="p-5 max-w-4xl mx-auto">
+        <main className="min-h-screen">
           {children}
         </main>
 
-        <footer className="text-center p-5 bg-gray-800 text-white">
-          <p>&copy; 2025 農園収穫体験</p>
+        <footer className="bg-gray-800 text-white">
+          <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; {new Date().getFullYear()} FarmHarbor. All rights reserved.</p>
+          </div>
         </footer>
       </body>
     </html>
