@@ -1,20 +1,24 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // DB Config
-const db = "mongodb://localhost:27017/farm-app";
+const db = process.env.MONGO_URI;
 
 // Connect to MongoDB
+console.log('Attempting to connect to MongoDB...');
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db)
   .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Define Schemas
 const UserSchema = new mongoose.Schema({
@@ -58,6 +62,70 @@ const Review = mongoose.model('Review', ReviewSchema);
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
+
+// @route   POST api/bookings
+// @desc    Create a booking
+// @access  Public
+app.post('/api/bookings', (req, res) => {
+  const newBooking = new Booking({
+    farm: req.body.farm,
+    user: req.body.user,
+    date: req.body.date,
+    time: req.body.time,
+  });
+
+  newBooking.save()
+    .then(booking => res.status(201).json(booking))
+    .catch(err => res.status(400).json({ error: 'Failed to create booking', details: err }));
+});
+
+// @route   GET api/bookings/user/:userId
+// @desc    Get all bookings for a specific user
+// @access  Public
+app.get('/api/bookings/user/:userId', (req, res) => {
+  Booking.find({ user: req.params.userId })
+    .populate('farm', ['name', 'location']) // Populate with farm name and location
+    .sort({ date: -1 })
+    .then(bookings => res.json(bookings))
+    .catch(err => res.status(404).json({ error: 'No bookings found for this user', details: err }));
+});
+
+// @route   GET api/farms
+// @desc    Get all farms
+// @access  Public
+app.get('/api/farms', (req, res) => {
+  Farm.find()
+    .sort({ name: 1 })
+    .then(farms => res.json(farms))
+    .catch(err => res.status(404).json({ error: 'No farms found', details: err }));
+});
+
+// @route   GET api/farms/:id
+// @desc    Get a specific farm by ID
+// @access  Public
+app.get('/api/farms/:id', (req, res) => {
+  Farm.findById(req.params.id)
+    .then(farm => res.json(farm))
+    .catch(err => res.status(404).json({ error: 'No farm found with that ID', details: err }));
+});
+
+// @route   POST api/farms
+// @desc    Create a new farm
+// @access  Public (for now - should be protected later)
+app.post('/api/farms', (req, res) => {
+  const newFarm = new Farm({
+    name: req.body.name,
+    description: req.body.description,
+    location: req.body.location,
+    products: req.body.products,
+    owner: req.body.owner // In a real app, this would come from auth
+  });
+
+  newFarm.save()
+    .then(farm => res.status(201).json(farm))
+    .catch(err => res.status(400).json({ error: 'Failed to create farm', details: err }));
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
