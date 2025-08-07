@@ -6,8 +6,8 @@ import Link from "next/link";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FarmHarbor | Find Your Next Farm Adventure",
-  description: "Discover and book unique farm experiences, from fruit picking to farm stays.",
+  title: "FarmHarbor | 次の農園体験を見つけよう",
+  description: "フルーツ狩りから農家民泊まで、ユニークな農園体験を見つけて予約しましょう。",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body className={`${inter.className} bg-gray-50 text-gray-800`}>
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,13 +26,13 @@ export default function RootLayout({
               </Link>
               <nav className="space-x-6">
                 <Link href="/" className="text-gray-600 hover:text-green-700 transition-colors">
-                  Home
+                  ホーム
                 </Link>
                 <Link href="#" className="text-gray-600 hover:text-green-700 transition-colors">
-                  My Bookings
+                  予約一覧
                 </Link>
                 <Link href="#" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
-                  Sign In
+                  サインイン
                 </Link>
               </nav>
             </div>

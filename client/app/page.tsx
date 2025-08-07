@@ -34,12 +34,12 @@ export default function HomePage() {
           priority
         />
         <div className="relative z-10 text-center p-8 bg-black bg-opacity-50 rounded-xl">
-          <h1 className="text-5xl font-extrabold mb-4 text-shadow-lg">Find Your Perfect Farm Experience</h1>
-          <p className="text-xl mb-8 text-shadow-md">Discover local farms, fresh produce, and unique agricultural adventures.</p>
+          <h1 className="text-5xl font-extrabold mb-4 text-shadow-lg">最高の農園体験を見つけよう</h1>
+          <p className="text-xl mb-8 text-shadow-md">地元の農園、新鮮な農産物、そしてユニークな農業アドベンチャーを発見してください。</p>
           <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto">
             <input
               type="text"
-              placeholder="Keyword (e.g., strawberries, Tokyo)"
+              placeholder="キーワード (例: いちご, 東京)"
               className="p-3 border-transparent rounded-md flex-grow bg-white bg-opacity-90 text-gray-800 placeholder-gray-500 focus:ring-2 focus:ring-green-500 focus:outline-none"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
@@ -49,20 +49,20 @@ export default function HomePage() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="">All Categories</option>
-              <option value="fruit">Fruit</option>
-              <option value="vegetable">Vegetable</option>
-              <option value="grain">Grain</option>
+              <option value="">すべてのカテゴリ</option>
+              <option value="fruit">果物</option>
+              <option value="vegetable">野菜</option>
+              <option value="grain">穀物</option>
             </select>
             <button type="submit" className="p-3 bg-green-600 text-white font-bold rounded-md hover:bg-green-700 transition-colors duration-300">
-              Search
+              検索
             </button>
           </form>
         </div>
       </section>
 
       <section className="bg-gray-50 p-8">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Featured Farms</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">注目の農園</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredFarms.map(farm => (
             <div key={farm.id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 ease-in-out hover:shadow-xl">
@@ -78,7 +78,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <Link href={`/farm/${farm.id}`} className="inline-block bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors duration-300">
-                  View Details
+                  詳細を見る
                 </Link>
               </div>
             </div>
