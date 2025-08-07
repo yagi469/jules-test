@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { farms, Farm } from './data';
 
 export default function HomePage() {
@@ -54,7 +55,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredFarms.map(farm => (
             <div key={farm.id} className="border rounded-lg p-4 text-center">
-              <img src={farm.image} alt={farm.name} className="w-full h-32 object-cover mb-2 rounded-md" />
+              <Image src={farm.image} alt={farm.name} width={300} height={200} className="w-full h-32 object-cover mb-2 rounded-md" />
               <h3 className="font-bold">{farm.name}</h3>
               <p>{farm.location}</p>
               <Link href={`/farm/${farm.id}`} className="text-green-500 hover:underline mt-2 inline-block">

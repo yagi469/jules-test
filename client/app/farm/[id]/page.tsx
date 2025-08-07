@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { farms } from '../../data';
 
 export default function FarmDetailsPage({ params }: { params: { id: string } }) {
@@ -18,9 +19,11 @@ export default function FarmDetailsPage({ params }: { params: { id: string } }) 
   return (
     <section className="bg-white p-5 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">{farm.name}</h2>
-      <img
+      <Image
         src={farm.image}
         alt={farm.name}
+        width={500}
+        height={500}
         className="w-full h-64 object-cover rounded-lg mb-4"
       />
       <p>{farm.description}</p>
