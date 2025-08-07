@@ -126,7 +126,6 @@ app.post('/api/farms', (req, res) => {
     .catch(err => res.status(400).json({ error: 'Failed to create farm', details: err }));
 });
 
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

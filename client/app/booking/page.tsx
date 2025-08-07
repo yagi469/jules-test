@@ -1,17 +1,24 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { farms } from '../../data';
+import { useState, useEffect } from 'react';
+import { farms, Farm } from '../data';
 
-type BookingPageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default function BookingPage({ params }: BookingPageProps) {
+export default function BookingPage() {
   const router = useRouter();
-  const farm = farms.find(f => f.id === parseInt(params.id));
+  const [farm, setFarm] = useState<Farm | null>(null);
+
+  useEffect(() => {
+    const farmId = localStorage.getItem('bookingFarmId');
+    if (farmId) {
+      const foundFarm = farms.find(f => f.id === parseInt(farmId));
+      if (foundFarm) {
+        setFarm(foundFarm);
+      }
+    }
+    // Clean up the stored ID
+    localStorage.removeItem('bookingFarmId');
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +29,6 @@ export default function BookingPage({ params }: BookingPageProps) {
       time: formData.get('time'),
       participants: formData.get('participants')
     };
-    // Store details in localStorage to pass to confirmation page
     localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
     router.push('/confirmation');
   };
@@ -30,7 +36,8 @@ export default function BookingPage({ params }: BookingPageProps) {
   if (!farm) {
     return (
       <section className="bg-white p-5 rounded-lg shadow-md text-center">
-        <h2 className="text-2xl font-bold">農園が見つかりません</h2>
+        <h2 className="text-2xl font-bold">予約する農園を読み込んでいます...</h2>
+        <p className="mt-2">農園詳細ページから予約を続けてください。</p>
       </section>
     );
   }
