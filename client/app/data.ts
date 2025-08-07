@@ -16,7 +16,7 @@ export const farms: Farm[] = [
     products: ['トマト', 'きゅうり', 'なす'],
     category: 'vegetable',
     description: '都心からアクセス抜群！新鮮な有機野菜の収穫が楽しめます。家族みんなで土に触れ、食の大切さを学びませんか？',
-    image: 'https://images.unsplash.com/photo-1570586437263-ab629fccc890?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const farms: Farm[] = [
     products: ['いちご', 'ブルーベリー'],
     category: 'fruit',
     description: '甘くて美味しいベリー狩り体験！種類も豊富で、食べ比べが楽しめます。',
-    image: 'https://images.unsplash.com/photo-1590874790202-e008a735e839?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    image: 'https://images.unsplash.com/photo-1622152723389-e45a72bcf319?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 3,
