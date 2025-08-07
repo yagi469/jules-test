@@ -25,7 +25,7 @@ export const farms: Farm[] = [
     products: ['いちご', 'ブルーベリー'],
     category: 'fruit',
     description: '甘くて美味しいベリー狩り体験！種類も豊富で、食べ比べが楽しめます。',
-    image: 'https://images.unsplash.com/photo-1622152723389-e45a72bcf319?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    image: '/berry-farm.jpg'
   },
   {
     id: 3,
