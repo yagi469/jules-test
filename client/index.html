@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農園収穫体験</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>農園収穫体験へようこそ！</h1>
+        <nav>
+            <a href="index.html">ホーム</a>
+            <a href="#">マイページ</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <h2>お気に入りの農園を見つけよう</h2>
+            <form id="search-form">
+                <input type="text" id="keyword" placeholder="キーワード (例: いちご、東京)">
+                <select id="category">
+                    <option value="">カテゴリ</option>
+                    <option value="fruit">果物</option>
+                    <option value="vegetable">野菜</option>
+                    <option value="grain">穀物</option>
+                </select>
+                <button type="submit">検索</button>
+            </form>
+        </section>
+
+        <section class="farm-listings">
+            <h2>農園リスト</h2>
+            <div id="farm-list">
+                <!-- 農園情報はここに動的に追加されます -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 農園収穫体験</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
