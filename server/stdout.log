@@ -1,0 +1,4 @@
+[dotenv@17.2.1] injecting env (1) from server/.env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+MONGO_URI variable read from .env: loaded
+Attempting to connect to MongoDB...
+Server is running on port 5000

@@ -2,42 +2,73 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { farms, Farm } from '../data';
+
+// A simplified interface for the farm info we need
+interface FarmInfo {
+  id: string;
+  name: string;
+}
 
 export default function BookingPage() {
   const router = useRouter();
-  const [farm, setFarm] = useState<Farm | null>(null);
+  const [farmInfo, setFarmInfo] = useState<FarmInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Retrieve farm details from localStorage, which are set on the farm details page
     const farmId = localStorage.getItem('bookingFarmId');
-    if (farmId) {
-      const foundFarm = farms.find(f => f.id === parseInt(farmId));
-      if (foundFarm) {
-        setFarm(foundFarm);
-      }
+    const farmName = localStorage.getItem('bookingFarmName');
+
+    if (farmId && farmName) {
+      setFarmInfo({ id: farmId, name: farmName });
     }
-    // Clean up the stored ID
-    localStorage.removeItem('bookingFarmId');
+    setIsLoading(false);
+
+    // It's better not to clean up here, in case the user reloads the page.
+    // Let's clean it up upon successful submission or when leaving the page.
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!farmInfo) return;
+
     const formData = new FormData(e.currentTarget);
     const bookingDetails = {
-      farmName: farm ? farm.name : '不明',
+      farmId: farmInfo.id,
+      farmName: farmInfo.name,
       date: formData.get('date'),
       time: formData.get('time'),
-      participants: formData.get('participants')
+      participants: formData.get('participants'),
+      name: formData.get('name'),
+      email: formData.get('email')
     };
+
+    // Storing details for confirmation page
     localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
+
+    // Clean up the farm details from localStorage after using them
+    localStorage.removeItem('bookingFarmId');
+    localStorage.removeItem('bookingFarmName');
+
     router.push('/confirmation');
   };
 
-  if (!farm) {
+  if (isLoading) {
+     return (
+      <section className="bg-white p-5 rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-bold">読み込み中...</h2>
+      </section>
+    );
+  }
+
+  if (!farmInfo) {
     return (
       <section className="bg-white p-5 rounded-lg shadow-md text-center">
-        <h2 className="text-2xl font-bold">予約する農園を読み込んでいます...</h2>
+        <h2 className="text-2xl font-bold">予約する農園が見つかりません</h2>
         <p className="mt-2">農園詳細ページから予約を続けてください。</p>
+        <button onClick={() => router.push('/')} className="mt-4 p-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+          ホームに戻る
+        </button>
       </section>
     );
   }
@@ -46,7 +77,7 @@ export default function BookingPage() {
     <section className="bg-white p-5 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">予約フォーム</h2>
       <p className="mb-4">
-        <strong>農園名:</strong> {farm.name}
+        <strong>農園名:</strong> {farmInfo.name}
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
@@ -80,7 +111,7 @@ export default function BookingPage() {
         </div>
 
         <button type="submit" className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600">
-          予約を確定する
+          予約情報を確認する
         </button>
       </form>
     </section>
