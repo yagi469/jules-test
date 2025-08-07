@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -10,13 +11,14 @@ app.use(cors());
 app.use(express.json());
 
 // DB Config
-const db = "mongodb://localhost:27017/farm-app";
+const db = process.env.MONGO_URI;
 
 // Connect to MongoDB
+console.log('Attempting to connect to MongoDB...');
 mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(db)
   .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Define Schemas
 const UserSchema = new mongoose.Schema({
@@ -88,6 +90,41 @@ app.get('/api/bookings/user/:userId', (req, res) => {
     .catch(err => res.status(404).json({ error: 'No bookings found for this user', details: err }));
 });
 
+// @route   GET api/farms
+// @desc    Get all farms
+// @access  Public
+app.get('/api/farms', (req, res) => {
+  Farm.find()
+    .sort({ name: 1 })
+    .then(farms => res.json(farms))
+    .catch(err => res.status(404).json({ error: 'No farms found', details: err }));
+});
+
+// @route   GET api/farms/:id
+// @desc    Get a specific farm by ID
+// @access  Public
+app.get('/api/farms/:id', (req, res) => {
+  Farm.findById(req.params.id)
+    .then(farm => res.json(farm))
+    .catch(err => res.status(404).json({ error: 'No farm found with that ID', details: err }));
+});
+
+// @route   POST api/farms
+// @desc    Create a new farm
+// @access  Public (for now - should be protected later)
+app.post('/api/farms', (req, res) => {
+  const newFarm = new Farm({
+    name: req.body.name,
+    description: req.body.description,
+    location: req.body.location,
+    products: req.body.products,
+    owner: req.body.owner // In a real app, this would come from auth
+  });
+
+  newFarm.save()
+    .then(farm => res.status(201).json(farm))
+    .catch(err => res.status(400).json({ error: 'Failed to create farm', details: err }));
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
