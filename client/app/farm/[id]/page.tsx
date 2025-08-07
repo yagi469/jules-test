@@ -1,9 +1,20 @@
+"use client"; // Make this a client component to use localStorage and router
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation
 import { farms } from '../../data';
 
 export default function FarmDetailsPage({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const farm = farms.find(f => f.id === parseInt(params.id));
+
+  const handleBookingClick = () => {
+    if (farm) {
+      localStorage.setItem('bookingFarmId', farm.id.toString());
+      router.push('/booking');
+    }
+  };
 
   if (!farm) {
     return (
@@ -34,9 +45,12 @@ export default function FarmDetailsPage({ params }: { params: { id: string } }) 
         <li><strong>収穫できる作物:</strong> {farm.products.join(', ')}</li>
       </ul>
 
-      <Link href={`/booking/${farm.id}`} className="inline-block bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 mt-4">
+      <button
+        onClick={handleBookingClick}
+        className="inline-block bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 mt-4"
+      >
         この農園を予約する
-      </Link>
+      </button>
 
       <div className="reviews mt-8">
         <h3 className="text-lg font-bold mb-2">レビュー</h3>
